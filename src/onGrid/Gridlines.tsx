@@ -6,6 +6,7 @@ import HorizontalLines from "./HorizontalLines";
 export interface GridlinesProps {
   numHours: number;
   numDays: number;
+  darkMode?: boolean;
 }
 
 const Gridlines: FC<GridlinesProps> = (props) => {
@@ -20,6 +21,7 @@ const Gridlines: FC<GridlinesProps> = (props) => {
       {/* Minor Gridlines */}
       {minorGridlinesPerHour > 0 && (
         <HorizontalLines
+          darkMode={props.darkMode}
           numLines={numHours * minorGridlinesPerHour + 1}
           offset={1}
           spacing={SUBDIVISIONS_PER_HOUR / minorGridlinesPerHour - 1}
@@ -29,6 +31,7 @@ const Gridlines: FC<GridlinesProps> = (props) => {
 
       {/* Major Gridlines */}
       <HorizontalLines
+        darkMode={props.darkMode}
         numLines={numHours + 1}
         offset={1}
         spacing={SUBDIVISIONS_PER_HOUR - 1}
@@ -41,6 +44,7 @@ const Gridlines: FC<GridlinesProps> = (props) => {
           <div
             key={i}
             style={{
+              opacity: props.darkMode ? 0.2 : undefined,
               gridColumn: `${i + 2}`,
               gridRow: `2 / span ${numHours * SUBDIVISIONS_PER_HOUR}`,
               borderRight: style?.verticalGridlinesBorder,

@@ -9,16 +9,17 @@ import {
 import { ThemeContext } from "../utils/themeContext";
 
 export interface EventRectanglesProps<
-  CustomCalendarEvent extends CalendarEvent
+  CustomCalendarEvent extends CalendarEvent,
 > {
   daySchedules: DaySchedule<CustomCalendarEvent>[];
   viewStartTime: number;
   viewEndTime: number;
   handleEventClick?: (event: CustomCalendarEvent) => void;
+  darkMode?: boolean;
 }
 
 const EventRectangles = <CustomCalendarEvent extends CalendarEvent>(
-  props: EventRectanglesProps<CustomCalendarEvent>
+  props: EventRectanglesProps<CustomCalendarEvent>,
 ) => {
   const { daySchedules, viewStartTime, viewEndTime, handleEventClick } = props;
 
@@ -32,6 +33,8 @@ const EventRectangles = <CustomCalendarEvent extends CalendarEvent>(
     themeTileContent: ThemeTileContent,
   } = theme;
 
+  const keyStart = JSON.stringify(daySchedules);
+
   return (
     <>
       {daySchedules.map((day, dayIndex) =>
@@ -43,11 +46,11 @@ const EventRectangles = <CustomCalendarEvent extends CalendarEvent>(
         }).map(
           (
             { totalCols, groupStartRow, groupEndRow, positionedEvents },
-            groupIndex
+            groupIndex,
           ) => {
             return (
               <div
-                key={groupIndex}
+                key={`${keyStart}-${dayIndex}-${groupIndex}`}
                 style={{
                   display: "grid",
                   gridTemplateColumns: `repeat(${totalCols}, 1fr)`,
@@ -69,7 +72,7 @@ const EventRectangles = <CustomCalendarEvent extends CalendarEvent>(
 
                     return (
                       <div
-                        key={`${dayIndex}-${groupIndex}-${eventIndex}`}
+                        key={`${keyStart}-${dayIndex}-${groupIndex}-${eventIndex}`}
                         style={{
                           gridColumn: `${col} / ${endCol}`,
                           gridRow: `${row} / ${endRow}`,
@@ -88,12 +91,22 @@ const EventRectangles = <CustomCalendarEvent extends CalendarEvent>(
                         onClick={() => (handleEventClick ?? (() => {}))(event)}
                       >
                         {CustomTileComponent ? (
-                          <CustomTileComponent event={event} />
+                          <CustomTileComponent
+                            event={event}
+                            darkMode={props.darkMode}
+                          />
                         ) : ThemeTileContent ? (
-                          <ThemeTileContent event={event} />
+                          <ThemeTileContent
+                            event={event}
+                            darkMode={props.darkMode}
+                          />
                         ) : (
                           <>
-                            <div style={{ fontWeight: "bold" }}>
+                            <div
+                              style={{
+                                fontWeight: "bold",
+                              }}
+                            >
                               {event.title}
                             </div>
                             <div
@@ -104,7 +117,7 @@ const EventRectangles = <CustomCalendarEvent extends CalendarEvent>(
                             >
                               {timeRangeFormatter(
                                 event.startTime,
-                                event.endTime
+                                event.endTime,
                               )}
                             </div>
                             <div
@@ -119,12 +132,12 @@ const EventRectangles = <CustomCalendarEvent extends CalendarEvent>(
                         )}
                       </div>
                     );
-                  }
+                  },
                 )}
               </div>
             );
-          }
-        )
+          },
+        ),
       )}
     </>
   );

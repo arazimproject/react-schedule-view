@@ -7,8 +7,8 @@ import { DEFAULT_THEME } from "./themes/default";
 import {
   CalendarEvent,
   DaySchedule,
-  ScheduleTheme,
   SUBDIVISIONS_PER_HOUR,
+  ScheduleTheme,
 } from "./utils/models";
 import { ThemeContext } from "./utils/themeContext";
 
@@ -18,10 +18,11 @@ export interface ScheduleViewProps<CustomCalendarEvent extends CalendarEvent> {
   viewEndTime?: number;
   handleEventClick?: (event: CustomCalendarEvent) => void;
   theme?: ScheduleTheme | ThemeName;
+  darkMode?: boolean;
 }
 
 const ScheduleView = <CustomCalendarEvent extends CalendarEvent>(
-  props: ScheduleViewProps<CustomCalendarEvent>
+  props: ScheduleViewProps<CustomCalendarEvent>,
 ) => {
   const {
     daySchedules,
@@ -51,7 +52,11 @@ const ScheduleView = <CustomCalendarEvent extends CalendarEvent>(
           ...style?.root,
         }}
       >
-        <Gridlines numHours={numHours} numDays={numDays} />
+        <Gridlines
+          numHours={numHours}
+          numDays={numDays}
+          darkMode={props.darkMode}
+        />
 
         <DayLabels dayNames={daySchedules.map((day) => day.name)} />
 
@@ -62,6 +67,7 @@ const ScheduleView = <CustomCalendarEvent extends CalendarEvent>(
           viewStartTime={viewStartTime}
           viewEndTime={viewEndTime}
           handleEventClick={handleEventClick}
+          darkMode={props.darkMode}
         />
       </div>
     </ThemeContext.Provider>

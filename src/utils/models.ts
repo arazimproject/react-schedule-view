@@ -3,7 +3,7 @@ import { CSSProperties, FC } from "react";
 export const SUBDIVISIONS_PER_HOUR = 12;
 
 export interface DaySchedule<
-  CustomCalendarEvent extends CalendarEvent = CalendarEvent
+  CustomCalendarEvent extends CalendarEvent = CalendarEvent,
 > {
   name: string;
   events: CustomCalendarEvent[];
@@ -28,7 +28,7 @@ export interface PositionedEvent<CustomCalendarEvent extends CalendarEvent> {
 }
 
 export interface PositionedEventGroup<
-  CustomCalendarEvent extends CalendarEvent
+  CustomCalendarEvent extends CalendarEvent,
 > {
   totalCols: number;
   groupStartRow: number;
@@ -43,7 +43,7 @@ export type DeepPartial<T> = {
 };
 
 export interface ScheduleTheme<
-  CustomCalendarEvent extends CalendarEvent = CalendarEvent
+  CustomCalendarEvent extends CalendarEvent = CalendarEvent,
 > {
   style?: ScheduleThemeStyle;
   hourHeight: CSSProperties["height"];
@@ -53,12 +53,12 @@ export interface ScheduleTheme<
   defaultTileColor:
     | CSSProperties["backgroundColor"]
     | ((event: CustomCalendarEvent) => CSSProperties["backgroundColor"]);
-  customTileComponent?: FC<{ event: CustomCalendarEvent }>;
-  themeTileContent?: FC<{ event: CustomCalendarEvent }>;
+  customTileComponent?: FC<{ event: CustomCalendarEvent; darkMode?: boolean }>;
+  themeTileContent?: FC<{ event: CustomCalendarEvent; darkMode?: boolean }>;
 }
 
 export interface ScheduleThemeStyle<
-  CustomCalendarEvent extends CalendarEvent = CalendarEvent
+  CustomCalendarEvent extends CalendarEvent = CalendarEvent,
 > {
   root?: CSSProperties;
   dayLabels?: CSSProperties;
@@ -67,7 +67,7 @@ export interface ScheduleThemeStyle<
     | CSSProperties
     | ((
         event: CustomCalendarEvent,
-        theme: ScheduleTheme<CustomCalendarEvent>
+        theme: ScheduleTheme<CustomCalendarEvent>,
       ) => CSSProperties);
   majorGridlinesBorder?: CSSProperties["borderStyle"];
   minorGridlinesBorder?: CSSProperties["borderStyle"];

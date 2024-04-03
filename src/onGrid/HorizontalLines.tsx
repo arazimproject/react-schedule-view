@@ -5,6 +5,7 @@ export interface HorizontalLinesProps {
   spacing: number;
   numLines: number;
   offset?: number;
+  darkMode?: boolean;
 }
 
 const HorizontalLines: FC<HorizontalLinesProps> = (props) => {
@@ -17,6 +18,7 @@ const HorizontalLines: FC<HorizontalLinesProps> = (props) => {
           <div
             key={i}
             style={{
+              opacity: props.darkMode ? 0.2 : undefined,
               gridColumn: `2 / -1`,
               gridRow: `${i * (Math.round(spacing) + 1) + offset + 1}`,
               borderTop: borderStyle,

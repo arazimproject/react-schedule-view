@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from "react";
-import { cssColorToRGB, RGBToHSL } from "../utils/cssColorFunctions";
+import { RGBToHSL, cssColorToRGB } from "../utils/cssColorFunctions";
 import { CalendarEvent } from "../utils/models";
 import { ThemeContext } from "../utils/themeContext";
 
 export const AppleEventTile = <
-  CustomCalendarEvent extends CalendarEvent
+  CustomCalendarEvent extends CalendarEvent,
 >(props: {
   event: CustomCalendarEvent;
+  darkMode?: boolean;
 }) => {
   const { event } = props;
   const theme = useContext(ThemeContext);
@@ -27,7 +28,9 @@ export const AppleEventTile = <
 
   const colorHSL = RGBToHSL(colorRGB);
   const mediumLightnessColorString = `hsl(${colorHSL[0]}, ${colorHSL[1]}%, 50%)`;
-  const darkLightnessColorString = `hsl(${colorHSL[0]}, ${colorHSL[1]}%, 30%)`;
+  const darkLightnessColorString = props.darkMode
+    ? `hsl(${colorHSL[0]}, ${colorHSL[1]}%, 70%)`
+    : `hsl(${colorHSL[0]}, ${colorHSL[1]}%, 30%)`;
 
   return (
     <div
@@ -37,6 +40,7 @@ export const AppleEventTile = <
         height: "100%",
         borderLeft: `4px solid ${mediumLightnessColorString}`,
         color: darkLightnessColorString,
+        overflow: "auto",
       }}
     >
       {theme.themeTileContent ? (
@@ -52,7 +56,11 @@ export const AppleEventTile = <
             {theme.timeRangeFormatter(event.startTime, event.endTime)}
           </div>
           <div
-            style={{ fontWeight: "bold", fontSize: "0.8rem", lineHeight: 1.2 }}
+            style={{
+              fontWeight: "bold",
+              fontSize: "0.8rem",
+              lineHeight: 1.2,
+            }}
           >
             {event.title}
           </div>
