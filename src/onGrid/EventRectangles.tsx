@@ -9,7 +9,7 @@ import {
 import { ThemeContext } from "../utils/themeContext";
 
 export interface EventRectanglesProps<
-  CustomCalendarEvent extends CalendarEvent,
+  CustomCalendarEvent extends CalendarEvent
 > {
   daySchedules: DaySchedule<CustomCalendarEvent>[];
   viewStartTime: number;
@@ -19,7 +19,7 @@ export interface EventRectanglesProps<
 }
 
 const EventRectangles = <CustomCalendarEvent extends CalendarEvent>(
-  props: EventRectanglesProps<CustomCalendarEvent>,
+  props: EventRectanglesProps<CustomCalendarEvent>
 ) => {
   const { daySchedules, viewStartTime, viewEndTime, handleEventClick } = props;
 
@@ -46,7 +46,7 @@ const EventRectangles = <CustomCalendarEvent extends CalendarEvent>(
         }).map(
           (
             { totalCols, groupStartRow, groupEndRow, positionedEvents },
-            groupIndex,
+            groupIndex
           ) => {
             return (
               <div
@@ -60,6 +60,7 @@ const EventRectangles = <CustomCalendarEvent extends CalendarEvent>(
                   gridColumn: `${dayIndex + 2}`,
                   gridRow: `${groupStartRow} / ${groupEndRow}`,
                   marginRight: "5%",
+                  zIndex: 99999,
                 }}
               >
                 {positionedEvents.map(
@@ -117,7 +118,7 @@ const EventRectangles = <CustomCalendarEvent extends CalendarEvent>(
                             >
                               {timeRangeFormatter(
                                 event.startTime,
-                                event.endTime,
+                                event.endTime
                               )}
                             </div>
                             <div
@@ -132,12 +133,12 @@ const EventRectangles = <CustomCalendarEvent extends CalendarEvent>(
                         )}
                       </div>
                     );
-                  },
+                  }
                 )}
               </div>
             );
-          },
-        ),
+          }
+        )
       )}
     </>
   );
