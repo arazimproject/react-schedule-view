@@ -58,7 +58,10 @@ const ScheduleView = <CustomCalendarEvent extends CalendarEvent>(
           darkMode={props.darkMode}
         />
 
-        <DayLabels dayNames={daySchedules.map((day) => day.name)} />
+        <DayLabels
+          dayNames={daySchedules.map((day) => day.name)}
+          darkMode={props.darkMode}
+        />
 
         <TimeLabels viewStartTime={viewStartTime} numHours={numHours} />
 

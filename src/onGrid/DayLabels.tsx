@@ -3,6 +3,7 @@ import { ThemeContext } from "../utils/themeContext";
 
 export interface DayLabelsProps {
   dayNames: string[];
+  darkMode?: boolean;
 }
 
 const DayLabels: FC<DayLabelsProps> = (props) => {
@@ -22,6 +23,7 @@ const DayLabels: FC<DayLabelsProps> = (props) => {
               padding: "0.5rem",
               textAlign: "center",
               ...theme.style?.dayLabels,
+              color: props.darkMode ? "white" : "black",
             }}
           >
             {dayName}
