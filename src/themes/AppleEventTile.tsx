@@ -43,6 +43,7 @@ export const AppleEventTile = <
         overflow: "auto",
       }}
     >
+      {/* @ts-ignore */}
       {theme.themeTileContent ? (
         theme.themeTileContent({ event })
       ) : (
